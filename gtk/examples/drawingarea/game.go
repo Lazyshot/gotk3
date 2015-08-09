@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/andre-hub/gotk3/cairo"
-	"github.com/andre-hub/gotk3/gdk"
-	"github.com/andre-hub/gotk3/gtk"
+	"github.com/lazyshot/gotk3/cairo"
+	"github.com/lazyshot/gotk3/gdk"
+	"github.com/lazyshot/gotk3/gtk"
 )
 
 const (

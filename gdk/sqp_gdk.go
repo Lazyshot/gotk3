@@ -8,7 +8,7 @@ package gdk
 */
 import "C"
 import (
-	"github.com/andre-hub/gotk3/glib"
+	"github.com/lazyshot/gotk3/glib"
 	"unsafe"
 )
 

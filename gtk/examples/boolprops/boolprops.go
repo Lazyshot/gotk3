@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/andre-hub/gotk3/gtk"
+	"github.com/lazyshot/gotk3/gtk"
 )
 
 // Setup the Window.

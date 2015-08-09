@@ -21,8 +21,8 @@ toGtkColorChooser(void *p)
 import "C"
 
 import (
-	"github.com/andre-hub/gotk3/gdk"
-	"github.com/andre-hub/gotk3/glib"
+	"github.com/lazyshot/gotk3/gdk"
+	"github.com/lazyshot/gotk3/glib"
 	"runtime"
 	"unsafe"
 )
