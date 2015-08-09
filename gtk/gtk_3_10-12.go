@@ -311,6 +311,31 @@ func (v *ListBox) GetSelectedRow() *ListBoxRow {
 	return l
 }
 
+// GetSelectedRows is a wrapper around gtk_list_box_get_selected_rows().
+func (v *ListBox) GetSelectedRows() []*ListBoxRow {
+	c := C.gtk_list_box_get_selected_rows(v.native())
+	if c == nil {
+		return nil
+	}
+	list := (*glib.List)(unsafe.Pointer(c))
+	rows := make([]*ListBoxRow, 0)
+
+	for {
+		if list == nil {
+			break
+		}
+
+		rowobj := &glib.Object{glib.ToGObject(unsafe.Pointer(list.Data))}
+		rows = append(rows, wrapListBoxRow(rowobj))
+		rowobj.RefSink()
+		runtime.SetFinalizer(rowobj, (*glib.Object).Unref)
+
+		list = list.Next
+	}
+
+	return rows
+}
+
 // SetSelectionMode is a wrapper around gtk_list_box_set_selection_mode().
 func (v *ListBox) SetSelectionMode(mode SelectionMode) {
 	C.gtk_list_box_set_selection_mode(v.native(), C.GtkSelectionMode(mode))

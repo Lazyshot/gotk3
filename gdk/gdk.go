@@ -236,6 +236,19 @@ func marshalEventMask(p uintptr) (interface{}, error) {
 	return EventMask(c), nil
 }
 
+// added by lazyshot
+// ScrollDirection is a representation of GDK's GdkScrollDirection
+
+type ScrollDirection int
+
+const (
+	SCROLL_UP     ScrollDirection = C.GDK_SCROLL_UP
+	SCROLL_DOWN   ScrollDirection = C.GDK_SCROLL_DOWN
+	SCROLL_LEFT   ScrollDirection = C.GDK_SCROLL_LEFT
+	SCROLL_RIGHT  ScrollDirection = C.GDK_SCROLL_RIGHT
+	SCROLL_SMOOTH ScrollDirection = C.GDK_SCROLL_SMOOTH
+)
+
 /*
  * GdkAtom
  */
@@ -878,6 +891,73 @@ func (v *EventMotion) MotionVal() (float64, float64) {
 }
 
 func (v *EventMotion) MotionValRoot() (float64, float64) {
+	x := v.native().x_root
+	y := v.native().y_root
+	return float64(x), float64(y)
+}
+
+/*
+ * GdkEventScroll
+ */
+
+type EventScroll struct {
+	*Event
+}
+
+// Native returns a pointer to the underlying GdkEventScroll.
+func (v *EventScroll) Native() uintptr {
+	return uintptr(unsafe.Pointer(v.native()))
+}
+
+func (v *EventScroll) native() *C.GdkEventScroll {
+	return (*C.GdkEventScroll)(unsafe.Pointer(v.Event.native()))
+}
+
+func (v *EventScroll) X() float64 {
+	c := v.native().x
+	return float64(c)
+}
+
+func (v *EventScroll) Y() float64 {
+	c := v.native().y
+	return float64(c)
+}
+
+// XRoot returns the x coordinate of the pointer relative to the root of the screen.
+func (v *EventScroll) XRoot() float64 {
+	c := v.native().x_root
+	return float64(c)
+}
+
+// YRoot returns the y coordinate of the pointer relative to the root of the screen.
+func (v *EventScroll) YRoot() float64 {
+	c := v.native().y_root
+	return float64(c)
+}
+
+func (v *EventScroll) State() uint {
+	c := v.native().state
+	return uint(c)
+}
+
+// Time returns the time of the event in milliseconds.
+func (v *EventScroll) Time() uint32 {
+	c := v.native().time
+	return uint32(c)
+}
+
+func (v *EventScroll) Type() EventType {
+	c := v.native()._type
+	return EventType(c)
+}
+
+func (v *EventScroll) MotionVal() (float64, float64) {
+	x := v.native().x
+	y := v.native().y
+	return float64(x), float64(y)
+}
+
+func (v *EventScroll) MotionValRoot() (float64, float64) {
 	x := v.native().x_root
 	y := v.native().y_root
 	return float64(x), float64(y)
